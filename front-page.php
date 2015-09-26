@@ -51,12 +51,7 @@
 									<div class="container-fluid">
 										<div class="collapse navbar-collapse mainnavmenu" id="bs-example-navbar-collapse-1">
 										<div id="menu-center">
-											<ul class="nav navbar-nav navbar-right mainnav">
-												<li><a href="#header_part" >Home</a></li>
-												<li><a href="#welcome_section">Our Vision</a></li>
-												<li><a href="#location">Location</a></li>
-												<li><a href="#contact_section">Contact</a></li>	
-											</ul>
+										<?php build_fmc_menu('front-menu', 'nav navbar-nav navbar-right mainnav'); ?>
 										</div>
 										</div>
 									</div>
@@ -79,8 +74,14 @@
 						<div class="row">	
 						<!-- About text start -->
 							<div class="section-title">
-								<h2>Looking for a new church home?</h2>
-								<p>We invite you to explore whether a life of worship, fellowship and ministry together with us might also be God’s calling for you.</p>
+								<?php $title_query = new WP_Query( array( 'pagename' => 'looking-for-a-new-church-home' ) ); 
+								while($title_query->have_posts()){
+									$title_query->the_post();
+									echo '<h2>'.get_the_title().'</h2>';
+									echo get_the_content();
+								}
+								wp_reset_postdata();
+								?>
 							</div>
 						<!-- About text end -->	
 						</div>
@@ -89,13 +90,14 @@
 
 								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="welcome_part wow fadeInLeft">
-										<h2>Our Identity &amp; Vision</h2>
-										<p>We at First Mennonite Church of Canton, Ohio are a community of Christ followers, a relationally centered fellowship, experiencing vibrant worship and strongly connected through mutually supportive, transparent caring and relating.</p>
-										<p>We are firmly rooted in Anabaptist belief and practice, calling each other to discipleship modeled on the life of Jesus, to commitment to personal faith in Christ, to the daily practice of peace-making, reconciliation and justice &#8596; righteousness, to emphasizing ministry toward those less fortunate and those on the margins, and strongly committed to mutuality in discernment within our fellowship — the body of Christ in this place called together by and guided by the Holy Spirit.</p>
-										<p>We value our life together deeply and desire to continue to grow in personal, interpersonal and communal life together.</p>
-										<p>We desire to grow in expanding the kingdom and the ministries to which God by the Spirit is drawing us.</p>
-										<p>We find great blessing in the life God has given us and invite and warmly welcome others to join us and to explore whether such a life of worship, fellowship and ministry together with us might also be God’s calling for them.</p>
-										
+										<?php $welcome_query = new WP_Query( array( 'pagename' => 'our-identity-vision'));
+										while($welcome_query->have_posts()){
+											$welcome_query->the_post();
+											echo '<h2>'.get_the_title().'</h2>';
+											echo get_the_content();
+										}
+										wp_reset_postdata();
+										?>
 									</div>
 								</div>
 							

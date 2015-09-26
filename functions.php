@@ -50,6 +50,33 @@ function fmc_widgets_init() {
 		));
 }
 
-add_action( 'widgets_init', 'fmc_widgets_init');
+function register_fmc_menus() {
+	register_nav_menus(
+		array(
+			'front-menu' => __( 'Front Page Menu' ),
+			'interior-menu' => __( 'Interior Page Menu' )
+			));
+}
 
+function build_fmc_menu($menu_name, $menu_class) {
+	if(( $locations = get_nav_menu_locations()) && isset($locations[ $menu_name ])) {
+		$menu = wp_get_nav_menu_object( $locations[ $menu_name ]);
+
+		$menu_items = wp_get_nav_menu_items($menu->term_id);
+		$menu_list = '<ul id="menu-'.$menu_name.'" class="'.$menu_class.'">';
+
+		foreach ( (array) $menu_items as $key => $menu_item) {
+			$menu_list .= '<li><a href="'.$menu_item->url.'">'.$menu_item->title.'</a></li>';
+		}
+		$menu_list .= '</ul>';
+	} else {
+		$menu_list = '<ul class="nav navbar-nav navbar-right mainnav"><li>Menu "'.$menu_name.'" not defined.</li></ul>';
+	}
+
+	echo $menu_list;
+}
+
+
+add_action( 'widgets_init', 'fmc_widgets_init');
+add_action('init', 'register_fmc_menus');
 ?>
